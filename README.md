@@ -2,8 +2,6 @@
 
 A modern, responsive dashboard for tracking chemical applications and budget management in agricultural or industrial settings. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
-![Dashboard Preview](https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot_20250219-210736-4lWkBXNGQm6AYy8l1CC2ZPuwCjeJ4Y.png)
-
 ## Features
 
 - 📊 Real-time budget tracking and analysis
@@ -17,7 +15,7 @@ A modern, responsive dashboard for tracking chemical applications and budget man
 ## Excel Template Guide
 
 ### Download Template
-We strongly recommend using our template file to ensure proper data formatting. You can download it here: [Spray_Budget_Template.xlsx]
+We strongly recommend using our template file to ensure proper data formatting. You can locate it in the projects public folder: [Spray_Budget_Template.xlsx]
 
 ### Sheet Organization
 
@@ -27,15 +25,12 @@ We strongly recommend using our template file to ensure proper data formatting. 
    - Don't use abbreviations or year numbers in sheet names
 
 2. **Required Headers (Row 1)**
-A: Spray Chem 1 | B: Spray Chem 2 | C: Spray Chem 3 | D: Fog Chem 1 | E: Fog Chem 2 | F: Fog Chem 3 | G: Date | H: Bays | I: Price | J: Monthly Budget | K: Month
-
+    - A: Spray Chem 1 | B: Spray Chem 2 | C: Spray Chem 3 | D: Fog Chem 1 | E: Fog Chem 2 | F: Fog Chem 3 | G: Date | H: Bays | I: Price | J: Monthly Budget | K: Month
 
 ### Data Entry Guide
 
 #### Correct Format Example:
-Spray Chem 1 | Spray Chem 2 | Spray Chem 3 | Fog Chem 1 | Fog Chem 2 | Fog Chem 3 | Date | Bays | Price    | Monthly Budget | Month
-Purespray    | Beleaf       |             | Magister   |            |            | 5-7  | 11   | 446.00   | 13875.00      | Feb
-Purespray    |             |             |            |            |            | 6-2  | 10   | 23.65    | 13875.00      | Feb
+![Dashboard Preview](https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot_20250219-210736-4lWkBXNGQm6AYy8l1CC2ZPuwCjeJ4Y.png)
 
 
 #### Formatting Rules
