@@ -21,7 +21,7 @@ interface DashboardContextType {
   monthlySpending: ReturnType<typeof calculateMonthlySpending>
   mostUsedChemicals: ReturnType<typeof getMostUsedChemicals>
   totalAreaTreated: { squareMeters: number; acres: number }
-  averagePricePerAcre: number
+  averagePricePerBay: number // Replace averagePricePerAcre
 }
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined)
@@ -82,7 +82,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [monthlySpending, setMonthlySpending] = useState(calculateMonthlySpending([]))
   const [mostUsedChemicals, setMostUsedChemicals] = useState(getMostUsedChemicals([]))
   const [totalAreaTreated, setTotalAreaTreated] = useState({ squareMeters: 0, acres: 0 })
-  const [averagePricePerAcre, setAveragePricePerAcre] = useState(0)
+  const [averagePricePerBay, setAveragePricePerBay] = useState(0)
 
   // Update calculations when applications change
   useEffect(() => {
@@ -91,7 +91,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
       setMonthlySpending(calculateMonthlySpending([]))
       setMostUsedChemicals(getMostUsedChemicals([]))
       setTotalAreaTreated({ squareMeters: 0, acres: 0 })
-      setAveragePricePerAcre(0)
+      setAveragePricePerBay(0)
       return
     }
 
@@ -107,12 +107,13 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     })
 
     const totalSpent = applications.reduce((sum, app) => sum + app.price, 0)
-    const newAveragePricePerAcre = newTotalAreaTreatedAcres > 0 ? totalSpent / newTotalAreaTreatedAcres : 0
+    const totalBays = applications.reduce((sum, app) => sum + app.bays.count, 0)
+    const newAveragePricePerBay = totalBays > 0 ? totalSpent / totalBays : 0
 
     setTotalUsage(newTotalUsage)
     setMonthlySpending(newMonthlySpending)
     setMostUsedChemicals(newMostUsedChemicals)
-    setAveragePricePerAcre(newAveragePricePerAcre)
+    setAveragePricePerBay(newAveragePricePerBay)
   }, [applications]) // Only depend on applications
 
   return (
@@ -129,7 +130,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
         monthlySpending,
         mostUsedChemicals,
         totalAreaTreated,
-        averagePricePerAcre,
+        averagePricePerBay,
       }}
     >
       {children}

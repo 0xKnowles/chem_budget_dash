@@ -9,9 +9,11 @@ import { ChemicalUsagePieChart } from "@/components/chemical-usage-pie-chart"
 import { DataInputButtons } from "@/components/data-input-buttons"
 import { MonthSelector } from "@/components/month-selector"
 import { WelcomeModal } from "@/components/welcome-modal"
+import { GenerateReport } from "@/components/generate-report"
 
 export default function DashboardPage() {
-  const { totalUsage, mostUsedChemicals, monthlySpending, totalAreaTreated, averagePricePerAcre } = useDashboard()
+  const { totalUsage, mostUsedChemicals, monthlySpending, totalAreaTreated, averagePricePerAcre, averagePricePerBay } =
+    useDashboard()
   const latestMonthData = monthlySpending[0] || { month: "No Data", spent: 0, budget: 0 }
 
   return (
@@ -25,6 +27,7 @@ export default function DashboardPage() {
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <DataInputButtons />
             <MonthSelector />
+            <GenerateReport />
           </div>
         </div>
 
@@ -84,21 +87,36 @@ export default function DashboardPage() {
             />
             <StatCard
               icon={<BeakerIcon className="w-6 h-6 text-purple-400" />}
-              title="Most Used Chemical"
-              value={mostUsedChemicals[0]?.chemical || "N/A"}
-              subtext={`Used ${mostUsedChemicals[0]?.count || 0} times`}
+              title="Most Used Chemicals"
+              value={
+                <div className="space-y-1">
+                  <div className="text-lg flex justify-between">
+                    <span>{mostUsedChemicals[0]?.chemical || "N/A"}</span>
+                    <span className="text-purple-600">{mostUsedChemicals[0]?.count || 0}</span>
+                  </div>
+                  <div className="text-sm text-gray-600 flex justify-between">
+                    <span>{mostUsedChemicals[1]?.chemical || "N/A"}</span>
+                    <span>{mostUsedChemicals[1]?.count || 0}</span>
+                  </div>
+                  <div className="text-sm text-gray-600 flex justify-between">
+                    <span>{mostUsedChemicals[2]?.chemical || "N/A"}</span>
+                    <span>{mostUsedChemicals[2]?.count || 0}</span>
+                  </div>
+                </div>
+              }
+              subtext="Total uses shown"
             />
             <StatCard
               icon={<StarIcon className="w-6 h-6 text-yellow-400" />}
               title="Total Spending"
-              value={`$${monthlySpending.reduce((sum, month) => sum + month.spent, 0).toLocaleString()}`}
-              subtext="Across all recorded months"
+              value={`$${latestMonthData.spent.toLocaleString()}`}
+              subtext="Spent this month"
             />
             <StatCard
               icon={<DollarSignIcon className="w-6 h-6 text-red-400" />}
-              title="Average Price per Acre"
-              value={`$${averagePricePerAcre.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
-              subtext="Based on total area treated"
+              title="Average Price per Bay"
+              value={`$${averagePricePerBay.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+              subtext="Cost per bay treated"
             />
           </div>
 
@@ -143,8 +161,8 @@ function StatCard({ icon, title, value, subtext }) {
         <div className="p-2 bg-gray-50/50 rounded-lg">{icon}</div>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold text-gray-800">{value}</div>
-        <p className="text-xs mt-1 text-gray-400">{subtext}</p>
+        <div className="font-bold text-gray-800">{value}</div>
+        <div className="mt-1 text-gray-400">{subtext}</div>
       </CardContent>
     </Card>
   )
